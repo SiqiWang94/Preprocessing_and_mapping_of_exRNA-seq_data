@@ -1,0 +1,6 @@
+#!/bin/bash
+#BSUB -R "span[hosts=1]"
+
+source ~/.bashrc
+
+{exec_job}
