@@ -4,8 +4,8 @@
 
 > Email: zzuwsq@163.com
 
-|      File     |     Description             | Function |
-|:-------------:|:---------------------------:|:--------:|
+|File|Description|Function|
+|:-------------|:---------------------------|:--------|
 |Snakefile|Snakemake workflows|Python scripts extended by declarative code to define rules. Rules describe how to create output files from input files.| 
 |config.json| Standard configuration file |To make your workflows more flexible|
 |cluster.json| Cluster configuration file  |To specify cluster submission parameters outside the Snakefile|
