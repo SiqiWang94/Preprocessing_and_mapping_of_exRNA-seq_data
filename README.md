@@ -1,5 +1,5 @@
 # exRNA-seq.pre-processing.Snakemake
-## Pre-processing of exRNA-seq data analysis </p>
+## Preprocessing and mapping of exRNA-seq data </p>
 > Shared by Siqi Wang
 
 > Email: zzuwsq@163.com
