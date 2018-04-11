@@ -1,7 +1,13 @@
+
 {
         "__default__" :
         {
                 "ppn" : "1",
+                "queue" : "Z-LU"
+        },
+        "remove_rRNA" :
+        {
+                "ppn" : "4",
                 "queue" : "Z-LU"
         },
 }
