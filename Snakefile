@@ -27,8 +27,8 @@ rule all:
                 expand("03.ordered_mapping_bowtie2/{library}/05.srpRNA/{library}.srpRNA.sam", library=config["Library"]),
                 expand("03.ordered_mapping_bowtie2/{library}/06.tRNA/{library}.tRNA.unAligned.fq", library=config["Library"]),
                 expand("03.ordered_mapping_bowtie2/{library}/06.tRNA/{library}.tRNA.sam", library=config["Library"]),
-                expand("03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/{library}.other_lncRNA.unAligned.fq",library=config["Library"]),
-                expand("03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/{library}.other_lncRNA.sam",library=config["Library"]),
+                expand("03.ordered_mapping_bowtie2/{library}/07.lncRNA/{library}.lncRNA.unAligned.fq",library=config["Library"]),
+                expand("03.ordered_mapping_bowtie2/{library}/07.lncRNA/{library}.lncRNA.sam",library=config["Library"]),
                 expand("03.ordered_mapping_bowtie2/{library}/08.mRNA/{library}.mRNA.unAligned.fq",library=config["Library"]),
                 expand("03.ordered_mapping_bowtie2/{library}/08.mRNA/{library}.mRNA.sam",library=config["Library"])
 
@@ -77,7 +77,7 @@ rule fastqc2:
                 fastqc -o {output.dir} {input.fastq}
                 """
 
-                rule bowtie2_remove_rRNA:
+rule bowtie2_remove_rRNA:
         input:
                 fastq = "01.Pre_cutadapt/{library}/{library}.trimmed.cutAdapt3.fastq"
         output:
@@ -124,7 +124,7 @@ rule bowtie2_mapping_miRNA:
                 bowtie2 -p {params.cpu} --sensitive-local --un {output.unAligned} -x {params.index} {input.fastq} -S {output.sam}
                 """
                 
-                rule bowtie2_mapping_piRNA:
+rule bowtie2_mapping_piRNA:
         input:
                 fastq = "03.ordered_mapping_bowtie2/{library}/01.miRNA/{library}.miRNA.unAligned.fq"
         output:
@@ -172,7 +172,7 @@ rule bowtie2_mapping_snRNA:
                 bowtie2 -p {params.cpu} --sensitive-local --un {output.unAligned} -x {params.index} {input.fastq} -S {output.sam}
                 """
 
-                rule bowtie2_mapping_srpRNA:
+rule bowtie2_mapping_srpRNA:
         input:
                 fastq = "03.ordered_mapping_bowtie2/{library}/04.snRNA/{library}.snRNA.unAligned.fq"
         output:
@@ -204,25 +204,25 @@ rule bowtie2_mapping_tRNA:
                 bowtie2 -p {params.cpu} --sensitive-local --un {output.unAligned} -x {params.index} {input.fastq} -S {output.sam}
                 """
 
-rule bowtie2_mapping_other_lncRNA:
+rule bowtie2_mapping_lncRNA:
         input:
                 fastq = "03.ordered_mapping_bowtie2/{library}/06.tRNA/{library}.tRNA.unAligned.fq"
         output:
-                unAligned = "03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/{library}.other_lncRNA.unAligned.fq",
-                sam = "03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/{library}.other_lncRNA.sam"
+                unAligned = "03.ordered_mapping_bowtie2/{library}/07.lncRNA/{library}.lncRNA.unAligned.fq",
+                sam = "03.ordered_mapping_bowtie2/{library}/07.lncRNA/{library}.lncRNA.sam"
         params:
-                jobname = "{library}.bowtie2_mapping_other_lncRNA",
-                index = config["References"]["bowtie2_hg38_other_lncRNA_All_index_dir"],
-                tmp = "03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/",
+                jobname = "{library}.bowtie2_mapping_lncRNA",
+                index = config["References"]["bowtie2_hg38_lncRNA_All_index_dir"],
+                tmp = "03.ordered_mapping_bowtie2/{library}/07.lncRNA/",
                 cpu = config["Remove_rRNA"]["cpu"]
         shell:
                 """
                 bowtie2 -p {params.cpu} --sensitive-local --un {output.unAligned} -x {params.index} {input.fastq} -S {output.sam}
                 """
                 
-                rule bowtie2_mapping_mRNA:
+rule bowtie2_mapping_mRNA:
         input:
-                fastq = "03.ordered_mapping_bowtie2/{library}/07.other_lncRNA/{library}.other_lncRNA.unAligned.fq"
+                fastq = "03.ordered_mapping_bowtie2/{library}/07.lncRNA/{library}.lncRNA.unAligned.fq"
         output:
                 unAligned = "03.ordered_mapping_bowtie2/{library}/08.mRNA/{library}.mRNA.unAligned.fq",
                 sam = "03.ordered_mapping_bowtie2/{library}/08.mRNA/{library}.mRNA.sam"
